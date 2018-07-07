@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+
+group 'com.github.zackhotte'
+version '0.0.1-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+jar {
+    baseName = 'cfb-data'
+    version = version
+}
+
+run {
+    main = 'com.github.zackhotte.Main'
+}
+
+dependencies {
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.6'
+    compile group: 'org.jsoup', name: 'jsoup', version: '1.11.3'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
