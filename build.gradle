@@ -21,7 +21,7 @@ jar {
 }
 
 run {
-    main = 'com.github.zackhotte.Main'
+    main = 'com.github.zackhotte.cfbdata.Main'
 }
 
 dependencies {
