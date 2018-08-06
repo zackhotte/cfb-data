@@ -12,7 +12,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 
 @RunWith(Parameterized.class)
@@ -23,7 +25,7 @@ public class ScheduleParserTest {
         return Arrays.asList(new Object[][]{
                 {"Texas", "Oklahoma State", 13, 10}, {"Florida State", "Louisville", 31, 28},
                 {"Alabama", "Tennessee", 7, 45}, {"Ole Miss", "LSU", 40, 24}, {"Penn State", "Michigan", 13, 42},
-                {"Notre Dame", "USC", 14, 49}, {"Baylor", "West Virginia", 38, 36}
+                {"Notre Dame", "USC", 14, 49}
         });
     }
 
@@ -48,12 +50,7 @@ public class ScheduleParserTest {
     @After
     public void tearDown() throws Exception {
         scheduleParser = null;
-    }
-
-    @Test
-    public void main() throws Exception {
-        ScheduleParser parser = new ScheduleParser(2018, 1);
-        System.out.println(parser.getSchedules().get("Notre Dame"));
+        schedules = null;
     }
 
     @Test
@@ -72,14 +69,26 @@ public class ScheduleParserTest {
     @Test
     public void testScoresOfGames() throws Exception {
         Schedule schedule = schedules.get(homeTeam);
-        System.out.println(schedule.getDate());
         assertEquals(awayScore, schedule.getAwayScore());
         assertEquals(homeScore, schedule.getHomeScore());
     }
 
     @Test
-    public void testThatWinnerIsCorrect() throws Exception {
+    public void testThatMatchedTeamsHaveSameSchedule() throws Exception {
+        Schedule scheduleAway = schedules.get(awayTeam);
+        Schedule scheduleHome = schedules.get(homeTeam);
+        assertEquals(scheduleAway, scheduleHome);
+    }
 
+    @Test
+    public void testThatWinnerIsCorrect() throws Exception {
+        Schedule schedule = schedules.get(homeTeam);
+        String winner = schedule.getWinner();
+        if (schedule.getAwayScore() > schedule.getHomeScore()) {
+            assertEquals(awayTeam, winner);
+        } else {
+            assertEquals(homeTeam, winner);
+        }
     }
 
 }
