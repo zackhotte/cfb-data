@@ -87,7 +87,7 @@ public class ScheduleParser extends CFBParser<Schedule> {
                 awayScore = Integer.parseInt(competitor.get("score").textValue());
             }
 
-            if (competitor.has("winner")) {
+            if (competitor.get("winner").booleanValue()) {
                 winner = teamName;
             }
         }
