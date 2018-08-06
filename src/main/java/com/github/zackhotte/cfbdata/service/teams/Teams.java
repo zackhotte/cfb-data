@@ -54,13 +54,13 @@ public class Teams {
 
         team.setSchool(teamNode.get("location").textValue());
         team.setName(teamNode.get("name").textValue());
-        team.setNickname(teamNode.get("nickname").textValue());
         team.setDisplayName(teamNode.get("displayName").textValue());
         team.setShortDisplayName(teamNode.get("shortDisplayName").textValue());
         team.setActive(teamNode.get("isActive").booleanValue());
         team.setEspnId(Long.parseLong(teamNode.get("id").textValue()));
 
         // Fields that need to be verified as they do not always exist in the API
+        team.setNickname(verifyNodeKey(teamNode, "nickname", JsonNode::textValue));
         team.setColor(verifyNodeKey(teamNode, "color", JsonNode::textValue));
         team.setColor(verifyNodeKey(teamNode, "alternateColor", JsonNode::textValue));
         team.setLogo(verifyNodeKey(teamNode, "logos", jsonNode -> jsonNode.get(0).get("href").textValue()));
@@ -92,7 +92,7 @@ public class Teams {
     }
 
     private String findTeamName(String name) {
-        final String finalName = name.toLowerCase().replaceAll("[^a-zA-Z0-9\\s\\-]", "");
+        final String finalName = name.toLowerCase().replaceAll("[^a-zA-Z0-9\\s\\-()'&]", "");
         List<String> filteredTeams = teamNames.parallelStream()
                 .filter((String teamName) -> teamName.toLowerCase().contains(finalName))
                 .collect(toList());
@@ -103,7 +103,7 @@ public class Teams {
 
         if (filteredTeams.size() > 1) {
             for (String teamName : filteredTeams) {
-                if (teamName.toLowerCase().equals(finalName)) {
+                if (teamName.toLowerCase().equals(name)) {
                     return teamName;
                 }
             }
@@ -111,4 +111,5 @@ public class Teams {
 
         throw new NullPointerException("Cannot find the team name: " + name);
     }
+
 }

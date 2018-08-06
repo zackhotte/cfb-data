@@ -22,7 +22,7 @@ public class TeamsTest {
 
     @Test
     public void testThatTotalNumberOfTeamsIsCorrect() {
-        assertEquals(760, teams.getTeamNames().size());
+        assertEquals(763, teams.getTeamNames().size());
     }
 
     @Test
@@ -39,5 +39,14 @@ public class TeamsTest {
         assertEquals("Notre Dame", teams.getTeamInfo("notre dame").getSchool());
         assertEquals("Florida State", teams.getTeamInfo("Florida St.").getSchool());
         assertEquals("USC", teams.getTeamInfo("usc").getSchool());
+        assertEquals("Miami (OH)", teams.getTeamInfo("Miami (OH)").getSchool());
+        assertEquals("Texas A&M", teams.getTeamInfo("texas a&m").getSchool());
+        assertEquals("Hawai'i", teams.getTeamInfo("hawai'i").getSchool());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testShouldThrowExceptionIfSchoolDoesNotExist() {
+        teams.getTeamInfo("McGill University");
+        teams.getTeamInfo(9000);
     }
 }
