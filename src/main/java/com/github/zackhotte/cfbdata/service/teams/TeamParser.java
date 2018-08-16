@@ -1,17 +1,19 @@
 package com.github.zackhotte.cfbdata.service.teams;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.zackhotte.cfbdata.service.CFBParser;
 import lombok.Getter;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 import static java.util.stream.Collectors.toList;
 
-public class Teams {
+public class TeamParser extends CFBParser<Team> {
 
     private JsonNode teamsNode;
 
@@ -22,17 +24,15 @@ public class Teams {
     @Getter
     private Map<String, Integer> teamIds = new HashMap<>();
 
-    public Teams() {
-        try {
-            String baseUrl = "http://site.api.espn.com/apis/site/v2/sports/football/college-football/teams?limit=1000";
-            URL url = new URL(baseUrl);
-            ObjectMapper mapper = new ObjectMapper();
-            JsonNode root = mapper.readTree(url);
-            this.teamsNode = root.get("sports").get(0).get("leagues").get(0).get("teams");
-            getAllTeams();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public TeamParser() {
+        super("http://site.api.espn.com/apis/site/v2/sports/football/college-football/teams?limit=1000");
+        this.teamsNode = root.get("sports").get(0).get("leagues").get(0).get("teams");
+        getAllTeams();
+    }
+
+    @Override
+    public List<Team> getData() {
+        return null;
     }
 
     private void getAllTeams() {
