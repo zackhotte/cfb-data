@@ -20,5 +20,9 @@ public class Team {
     private String logo;
     private String logoDark;
 
+    @Override
+    public String toString() {
+        return displayName;
+    }
 
 }
