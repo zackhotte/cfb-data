@@ -30,6 +30,11 @@ public class TeamParser extends CFBParser<Team> {
         getAllTeams();
     }
 
+    public static Team getTeamById(int teamId) {
+        TeamParser parser = new TeamParser();
+        return parser.getTeamInfo(teamId);
+    }
+
     @Override
     public List<Team> getData() {
         return null;
